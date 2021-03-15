@@ -25,7 +25,7 @@ const movieSchema = new mongoose.Schema({
   description: {
     type: String,
     minlength: 20,
-    maxlength: 500,
+    maxlength: 2500,
     required: true,
   },
   image: {
@@ -64,7 +64,7 @@ const movieSchema = new mongoose.Schema({
     ref: 'user',
   },
   movieId: {
-    type: String,
+    type: Number,
   },
   nameRU: {
     type: String,

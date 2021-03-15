@@ -21,7 +21,9 @@ const createMovie = (req, res, next) => {
     trailer,
     nameRU,
     nameEN,
-    thumbnail } = req.body;
+    thumbnail,
+    movieId } = req.body;
+
   movie.create({
     country,
     director,
@@ -33,6 +35,7 @@ const createMovie = (req, res, next) => {
     nameRU,
     nameEN,
     thumbnail,
+    movieId,
     owner: req.user._id,
   })
     .then((movieData) => {
