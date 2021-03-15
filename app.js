@@ -1,13 +1,17 @@
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
-
+const cookieParser = require('cookie-parser');
 const app = express();
 const mongoose = require('mongoose');
 const router = require('./router/index');
 const ServerError = require('./errors/server-error');
 const celebrateErrorHandler = require('./errors/celebrate-validation');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { createUser, loginUser } = require('./controllers/users');
+const { loginUserValidator, createUserValidator } = require('./errors/celebrate-validator');
+const auth = require('./middlewares/auth');
+const cors = require('cors');
 
 // eslint-disable-next-line no-undef
 const { PORT = 3000 } = process.env;
@@ -19,10 +23,28 @@ mongoose.connect('mongodb://localhost:27017/moviesdb', {
   useUnifiedTopology: true,
 });
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+
+
+const allowedCors = [
+  'https://kolenhen.students.nomoredomains.icu',
+  'https://api.kolenhen.students.nomoredomains.icu',
+  'http://localhost:3000',
+  // 'http://localhost:3001',
+];
+
+app.use(cors({
+  origin: allowedCors,
+}));
+
+app.use(cors());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cookieParser());
+
 app.use(requestLogger);
-app.use('/', router);
+app.post('/signup', createUserValidator, createUser);
+app.post('/signin', loginUserValidator, loginUser);
+app.use('/', auth, router);
 app.use(errorLogger);
 app.use(celebrateErrorHandler);
 app.use(ServerError);

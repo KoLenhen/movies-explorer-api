@@ -34,11 +34,12 @@ const createMovieValidator = celebrate({
     director: Joi.string().required().min(2).max(50),
     duration: Joi.number().required(),
     year: Joi.number().required(),
-    description: Joi.string().required().min(20).max(500),
+    description: Joi.string().required().min(20).max(2500),
     image: Joi.string().regex(/^(https?:\/\/)?([\w-]{1,32}\.[\w-]{1,32})[^\s@]*$/).required(),
     trailer:  Joi.string().regex(/^(https?:\/\/)?([\w-]{1,32}\.[\w-]{1,32})[^\s@]*$/).required(),
     nameRU: Joi.string().required().min(1).max(200),
     nameEN: Joi.string().required().min(1).max(200),
+    movieId: Joi.number().required(),
     thumbnail:  Joi.string().regex(/^(https?:\/\/)?([\w-]{1,32}\.[\w-]{1,32})[^\s@]*$/).required(),
   }).unknown(true),
 });
