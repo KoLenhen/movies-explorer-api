@@ -25,21 +25,19 @@ mongoose.connect('mongodb://localhost:27017/moviesdb', {
 
 
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cookieParser());
 const allowedCors = [
-  'https://movies-kolenhen.students.nomoredomains.icu',
-  'https://api.movies-kolenhen.students.nomoredomains.icu',
+  'https://kolenhen.students.nomoredomains.icu',
+  'https://api.kolenhen.students.nomoredomains.icu',
   'http://localhost:3000',
-  // 'http://localhost:3001',
+  'http://localhost:3001',
 ];
 
 app.use(cors({
   origin: allowedCors,
 }));
-
-app.use(cors());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(cookieParser());
 
 app.use(requestLogger);
 app.post('/signup', createUserValidator, createUser);
