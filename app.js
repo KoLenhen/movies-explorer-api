@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const app = express();
 const mongoose = require('mongoose');
@@ -29,8 +29,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 const allowedCors = [
-  // 'https://kolenhen.students.nomoredomains.icu',
-  // 'https://api.kolenhen.students.nomoredomains.icu',
+  "https://kolenmov.students.nomoredomains.icu and",
+  "https://api.kolenmov.students.nomoredomains.icu",
   'http://localhost:3000',
   'http://localhost:3001',
 ];
