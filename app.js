@@ -11,8 +11,8 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { createUser, loginUser } = require('./controllers/users');
 const { loginUserValidator, createUserValidator } = require('./errors/celebrate-validator');
 const auth = require('./middlewares/auth');
-const cors = require('cors');
-app.use(cors());
+// const cors = require('cors');
+
 // eslint-disable-next-line no-undef
 const { PORT = 3001 } = process.env;
 
@@ -28,20 +28,23 @@ mongoose.connect('mongodb://localhost:27017/moviesdb', {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
-// app.use((req, res, next) => {
-//   res.header('Access-Control-Allow-Origin', '*');
-//   next();
-// });
-// const allowedCors = [
-//   "https://kolenmov.students.nomoredomains.icu and",
-//   "https://api.kolenmov.students.nomoredomains.icu",
-//   'http://localhost:3000',
-//   'http://localhost:3001',
-// ];
 
-// app.use(cors({
-//   origin: allowedCors,
-// }));
+const allowedCors = [
+  "https://kolenmov.students.nomoredomains.icu and",
+  "https://api.kolenmov.students.nomoredomains.icu",
+  'http://localhost:3000',
+  'http://localhost:3001',
+];
+
+app.use(function(req, res, next) {
+  const { origin } = req.headers;
+
+  if (allowedCors.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin);
+  }
+
+  next();
+});
 
 app.use(requestLogger);
 app.post('/signup', createUserValidator, createUser);
