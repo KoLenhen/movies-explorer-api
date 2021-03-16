@@ -11,7 +11,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { createUser, loginUser } = require('./controllers/users');
 const { loginUserValidator, createUserValidator } = require('./errors/celebrate-validator');
 const auth = require('./middlewares/auth');
-// const cors = require('cors');
+const cors = require('cors');
 
 // eslint-disable-next-line no-undef
 const { PORT = 3001 } = process.env;
@@ -29,22 +29,27 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-const allowedCors = [
-  "https://kolenmov.students.nomoredomains.icu and",
-  "https://api.kolenmov.students.nomoredomains.icu",
-  'http://localhost:3000',
-  'http://localhost:3001',
-];
+// const allowedCors = [
+//   "https://kolenmov.students.nomoredomains.icu and",
+//   "https://api.kolenmov.students.nomoredomains.icu",
+//   'http://localhost:3000',
+//   'http://localhost:3001',
+// ];
 
-app.use(function(req, res, next) {
-  const { origin } = req.headers;
+// app.use(function(req, res, next) {
+//   const { origin } = req.headers;
 
-  if (allowedCors.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
-  }
+//   if (allowedCors.includes(origin)) {
+//     res.header('Access-Control-Allow-Origin', origin);
+//   }
 
-  next();
-});
+//   next();
+// });
+app.use(cors({
+  origin: 'https://kolenmov.students.nomoredomains.icu',
+  credentials: true,
+}));
+
 
 app.use(requestLogger);
 app.post('/signup', createUserValidator, createUser);
