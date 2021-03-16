@@ -29,8 +29,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 const allowedCors = [
-  'https://kolenhen.students.nomoredomains.icu',
-  'https://api.kolenhen.students.nomoredomains.icu',
+  // 'https://kolenhen.students.nomoredomains.icu',
+  // 'https://api.kolenhen.students.nomoredomains.icu',
   'http://localhost:3000',
   'http://localhost:3001',
 ];
