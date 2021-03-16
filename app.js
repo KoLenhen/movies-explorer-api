@@ -12,7 +12,7 @@ const { createUser, loginUser } = require('./controllers/users');
 const { loginUserValidator, createUserValidator } = require('./errors/celebrate-validator');
 const auth = require('./middlewares/auth');
 const cors = require('cors');
-
+app.use(cors());
 // eslint-disable-next-line no-undef
 const { PORT = 3001 } = process.env;
 
@@ -28,10 +28,10 @@ mongoose.connect('mongodb://localhost:27017/moviesdb', {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  next();
-});
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   next();
+// });
 // const allowedCors = [
 //   "https://kolenmov.students.nomoredomains.icu and",
 //   "https://api.kolenmov.students.nomoredomains.icu",
@@ -42,7 +42,7 @@ app.use((req, res, next) => {
 // app.use(cors({
 //   origin: allowedCors,
 // }));
-// app.use(cors());
+
 app.use(requestLogger);
 app.post('/signup', createUserValidator, createUser);
 app.post('/signin', loginUserValidator, loginUser);
