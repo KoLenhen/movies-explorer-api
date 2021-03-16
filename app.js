@@ -14,7 +14,7 @@ const auth = require('./middlewares/auth');
 const cors = require('cors');
 
 // eslint-disable-next-line no-undef
-const { PORT = 3000 } = process.env;
+const { PORT = 3001 } = process.env;
 
 mongoose.connect('mongodb://localhost:27017/moviesdb', {
   useNewUrlParser: true,
@@ -26,8 +26,8 @@ mongoose.connect('mongodb://localhost:27017/moviesdb', {
 
 
 const allowedCors = [
-  'https://kolenhen.students.nomoredomains.icu',
-  'https://api.kolenhen.students.nomoredomains.icu',
+  'https://movies-kolenhen.students.nomoredomains.icu',
+  'https://api.movies-kolenhen.students.nomoredomains.icu',
   'http://localhost:3000',
   // 'http://localhost:3001',
 ];
