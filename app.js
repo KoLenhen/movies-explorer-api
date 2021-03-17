@@ -11,12 +11,12 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { createUser, loginUser } = require('./controllers/users');
 const { loginUserValidator, createUserValidator } = require('./errors/celebrate-validator');
 const auth = require('./middlewares/auth');
-const cors = require('cors');
+const corsValidator  = require('./middlewares/corsValidatior');
 
 // eslint-disable-next-line no-undef
 const { PORT = 3001 } = process.env;
 // eslint-disable-next-line no-undef
-// const { NODE_ENV = 'production' } = process.env;
+const { NODE_ENV = 'production' } = process.env;
 
 mongoose.connect('mongodb://localhost:27017/moviesdb', {
   useNewUrlParser: true,
@@ -35,22 +35,10 @@ app.use(cookieParser());
 
 // app.use(express.urlencoded({ extended: true }));
 // app.use(express.json());
-// app.use(cookieParser());
 
-const allowedCors = [
-  'https://kolenhen.students.nomoredomains.icu',
-  'https://api.kolenhen.students.nomoredomains.icu',
-  'http://localhost:3000',
-  'http://localhost:3001',
-];
-
-app.use(cors({
-  origin: allowedCors,
-  credentials: true,
-}));
-
-
-app.use(cors());
+if (NODE_ENV === 'production') {
+  app.use(corsValidator);
+}
 
 app.use(requestLogger);
 
