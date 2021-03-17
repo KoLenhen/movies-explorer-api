@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-// const bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const app = express();
 const mongoose = require('mongoose');
@@ -15,6 +15,8 @@ const cors = require('cors');
 
 // eslint-disable-next-line no-undef
 const { PORT = 3001 } = process.env;
+// eslint-disable-next-line no-undef
+// const { NODE_ENV = 'production' } = process.env;
 
 mongoose.connect('mongodb://localhost:27017/moviesdb', {
   useNewUrlParser: true,
@@ -23,35 +25,35 @@ mongoose.connect('mongodb://localhost:27017/moviesdb', {
   useUnifiedTopology: true,
 });
 
+app.use(requestLogger);
 
-
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(cookieParser());
 
-// const allowedCors = [
-//   "https://kolenmov.students.nomoredomains.icu and",
-//   "https://api.kolenmov.students.nomoredomains.icu",
-//   'http://localhost:3000',
-//   'http://localhost:3001',
-// ];
 
-// app.use(function(req, res, next) {
-//   const { origin } = req.headers;
 
-//   if (allowedCors.includes(origin)) {
-//     res.header('Access-Control-Allow-Origin', origin);
-//   }
+// app.use(express.urlencoded({ extended: true }));
+// app.use(express.json());
+// app.use(cookieParser());
 
-//   next();
-// });
+const allowedCors = [
+  'https://kolenhen.students.nomoredomains.icu',
+  'https://api.kolenhen.students.nomoredomains.icu',
+  'http://localhost:3000',
+  'http://localhost:3001',
+];
+
 app.use(cors({
-  origin: 'https://kolenmov.students.nomoredomains.icu',
+  origin: allowedCors,
   credentials: true,
 }));
 
 
+app.use(cors());
+
 app.use(requestLogger);
+
 app.post('/signup', createUserValidator, createUser);
 app.post('/signin', loginUserValidator, loginUser);
 app.use('/', auth, router);
