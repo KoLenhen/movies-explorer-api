@@ -1,6 +1,5 @@
-const cors = require('cors');
-
 const MethodNotAllowedError = require('../errors/not-allowed');
+
 const allowedCors = [
   'https://kolenmov.students.nomoredomains.icu',
   'https://api.kolenmov.students.nomoredomains.icu',
@@ -17,8 +16,7 @@ const corsParams = {
     }
   },
   credentials: true,
+  optionsSuccessStatus: 200,
 };
 
-const corsValidator = cors(corsParams);
-
-module.exports = corsValidator;
+module.exports = corsParams;

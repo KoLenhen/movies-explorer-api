@@ -11,13 +11,11 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { createUser, loginUser } = require('./controllers/users');
 const { loginUserValidator, createUserValidator } = require('./errors/celebrate-validator');
 const auth = require('./middlewares/auth');
-const corsValidator  = require('./middlewares/corsValidatior');
-
+const corsParams  = require('./middlewares/corsValidatior');
+const cors = require('cors');
 // eslint-disable-next-line no-undef
-const { PORT = 3001 } = process.env;
-// eslint-disable-next-line no-undef
-const { NODE_ENV = 'production' } = process.env;
-
+const { PORT = 3000 } = process.env;
+// app.use(cors());
 mongoose.connect('mongodb://localhost:27017/moviesdb', {
   useNewUrlParser: true,
   useCreateIndex: true,
@@ -36,9 +34,7 @@ app.use(cookieParser());
 // app.use(express.urlencoded({ extended: true }));
 // app.use(express.json());
 
-if (NODE_ENV === 'production') {
-  app.use(corsValidator);
-}
+app.use(cors(corsParams));
 
 app.use(requestLogger);
 
