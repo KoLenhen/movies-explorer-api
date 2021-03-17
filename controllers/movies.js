@@ -4,7 +4,7 @@ const AuthorizedButForbidden = require('../errors/authorized-but-forbidden');
 
 const getMovies = (req, res, next) => {
   movie.find({})
-    .orFail(new NotFoundError('В коллекции нет фильмов'))
+    // .orFail(new NotFoundError('В коллекции нет фильмов'))
       .then((movies) =>
         res.status(200)
       .send(movies))

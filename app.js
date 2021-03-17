@@ -15,7 +15,8 @@ const corsParams  = require('./middlewares/corsValidatior');
 const cors = require('cors');
 // eslint-disable-next-line no-undef
 const { PORT = 3000 } = process.env;
-// app.use(cors());
+
+
 mongoose.connect('mongodb://localhost:27017/moviesdb', {
   useNewUrlParser: true,
   useCreateIndex: true,
@@ -28,11 +29,6 @@ app.use(requestLogger);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-
-
-
-// app.use(express.urlencoded({ extended: true }));
-// app.use(express.json());
 
 app.use(cors(corsParams));
 
