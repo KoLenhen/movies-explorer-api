@@ -14,7 +14,7 @@ const auth = require('./middlewares/auth');
 const corsParams  = require('./middlewares/corsValidatior');
 const cors = require('cors');
 // eslint-disable-next-line no-undef
-const { PORT = 3001 } = process.env;
+const { PORT = 3000 } = process.env;
 // app.use(cors());
 mongoose.connect('mongodb://localhost:27017/moviesdb', {
   useNewUrlParser: true,
