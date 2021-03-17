@@ -2,8 +2,8 @@ const cors = require('cors');
 
 const MethodNotAllowedError = require('../errors/not-allowed');
 const allowedCors = [
-  'https://kolenhen.students.nomoredomains.icu',
-  'https://api.kolenhen.students.nomoredomains.icu',
+  'https://kolenmov.students.nomoredomains.icu',
+  'https://api.kolenmov.students.nomoredomains.icu',
   'http://localhost:3000',
   'http://localhost:3001',
 ];
